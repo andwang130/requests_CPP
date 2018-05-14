@@ -1,2 +1,6 @@
-﻿  requests.cpp
+﻿  mian.cpp
+  requests.cpp
+  正在生成代码...
+c:\mecpp\requests_cpp\project1\project1\requests.cpp(134): warning C4715: “Crequests::get_response_head”: 不是所有的控件路径都返回值
+c:\mecpp\requests_cpp\project1\project1\requests.cpp(131): warning C4172: 返回局部变量或临时变量的地址: flag
   Project1.vcxproj -> C:\mecpp\requests_CPP\Project1\Debug\Project1.exe

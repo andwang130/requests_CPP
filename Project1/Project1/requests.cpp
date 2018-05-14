@@ -1,5 +1,6 @@
 #include<requests.h>
 #include<iostream>
+#include<regex>
 using namespace std;
 void Crequests::socket_send(string url, string body)
 {
@@ -17,21 +18,32 @@ void Crequests::socket_send(string url, string body)
 	cout << WSAGetLastError() << endl;  //打印一下错误码
 	send(socket_,body.c_str(),strlen(body.c_str()),0);
 	char req[4090];
+	int recv_max = 0;
+
+	//u_long mode = 1;
+	//ioctlsocket(socket_, FIONBIO, &mode);//将socket设置为非塞模式
+
+	int buf = recv(socket_, req, 4090, 0); //获取到Content-Lengt长度,MSG_PEEKW标志不会将缓存区的数据拿出来
+	get_response_head(req);
+	//get_Content_Lengt（req,recv_max,buf);
+	//cout << req << endl;
 	int i= 0;
 	string str;
 	while(true) //recv返回字节数，recv传递4个参数。第一个是socket,第二个是结束返回的数据的，char *，第三个是单次接收的大小，第四个一般为0
 	{
-		cout << recv(socket_, req, 4090, 0) << endl;;
-		//cout << req << endl;
+		int buf = recv(socket_, req, 4090, 0);
+		i = i + buf;
+		cout << buf<< endl;
 		str += req;
-		//cout << "***************"<<i << endl;
-		memset(req, 0, sizeof(char) * 4090);
-		i++;
+		cout << "***************"<<i << endl;
+		memset(req, 0, 4090);
+		if (buf <= 0)
+		{
+			break;
+		}
+		
 	}
 	cout << str << endl;;
-
-	cout << req << endl;
-	
 }
 sockaddr_in  Crequests::socket_url_ip(string url)//传入域名，返回ip信息
 {
@@ -90,7 +102,60 @@ string Crequests::body_structure(string &method,string &url,map<string, string>&
 	}*/
 	return code;
 }
+char * Crequests::get_response_head(char *req)
+{
+	//这个函数用来查找到\r\n\r\n的位置，取到head；
+	//
+	char flag[5] = "\r\n\r\n";
+	int req_lent = strlen(req);
+	int flag_lent = strlen(flag);
+	cout << "req_lent" << flag_lent << endl;
+	for (int i = 0; i < req_lent; i++)
+	{
+		int j=0;
+		for (; j< flag_lent; j++)
+		{
+			if (req[i+j] != flag[j])
+			{
+				break;
+			}
+			
+		}
+		if (j == flag_lent)
+		{
+			cout <<"jssss"<< j << endl;
+			cout << i << endl;
+			string  head;
+			req_to_head(head, req, i);
+			cout << head << endl;
+			return flag;
+		}
+	}
+}
+void Crequests::req_to_head(string &head, char *req,int max)
+{
+	for (int i = 0; i < max; i++)
+	{
+		head.push_back(req[i]);
+	}
+	
+}
+void Crequests::get_Content_Lengt(char *req,int max,int buf)
+{
+	cmatch st;
+	regex length("Content-Length: (\\d+)");
 
+	if (regex_search(req, st, length))
+	{
+		cout << st[1] << endl;
+	}
+	else
+	{
+
+	}
+	
+
+}
  void Crequests::test(string url,string &method, map<string, string>&head, map<string, string>&data)
 {
 	string body = "sdsdsdsds";
