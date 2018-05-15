@@ -2,6 +2,7 @@
 #include<iostream>
 #include<regex>
 using namespace std;
+const int buf_len = 1024;
 void Crequests::socket_send(string url, string body)
 {
 	cout << body << endl;
@@ -16,34 +17,46 @@ void Crequests::socket_send(string url, string body)
 	server_in.sin_port =htons(80);
 	cout << connect(socket_, (struct sockaddr*) &server_in, sizeof(server_in)) << endl;;//客户端建立连接
 	cout << WSAGetLastError() << endl;  //打印一下错误码
+	
 	send(socket_,body.c_str(),strlen(body.c_str()),0);
-	char req[4090];
+	char req[buf_len];
 	int recv_max = 0;
 
 	//u_long mode = 1;
 	//ioctlsocket(socket_, FIONBIO, &mode);//将socket设置为非塞模式
 
-	int buf = recv(socket_, req, 4090, 0); //获取到Content-Lengt长度,MSG_PEEKW标志不会将缓存区的数据拿出来
-	get_response_head(req);
-	//get_Content_Lengt（req,recv_max,buf);
-	//cout << req << endl;
-	int i= 0;
-	string str;
-	while(true) //recv返回字节数，recv传递4个参数。第一个是socket,第二个是结束返回的数据的，char *，第三个是单次接收的大小，第四个一般为0
+	 
+	while (true)  //这个循环读取到head,读取到就停
 	{
-		int buf = recv(socket_, req, 4090, 0);
-		i = i + buf;
-		cout << buf<< endl;
-		str += req;
-		cout << "***************"<<i << endl;
-		memset(req, 0, 4090);
+		int buf = recv(socket_, req, buf_len, 0); //获取到Content-Lengt长度,MSG_PEEKW标志不会将缓存区的数据拿出来
+		text += req;
+		readbuf += buf;
+		cout << readbuf << endl;
+		if (get_response_head(req))
+		{
+			break;
+		 }
+		memset(req, 0, buf_len);
+	}
+	int Lengt_buf=get_Content_Lengt();  //获得head之后，读取head里面的Content_Lengt长度
+	
+	sum_buf = Lengt_buf + head_buf;//Content_Lengt的长度加上head的长度，是整个返回的长度
+	cout << "Lengt_buf" << sum_buf << endl;
+	int i= 0;
+	while(readbuf<sum_buf) //recv返回字节数，recv传递4个参数。第一个是socket,第二个是结束返回的数据的，char *，第三个是单次接收的大小，第四个一般为0
+	{
+		int buf = recv(socket_, req, buf_len, 0);
+		readbuf += buf;
+		text += req;
+		cout << "***************"<< readbuf << endl;
+		memset(req, 0, buf_len);
 		if (buf <= 0)
 		{
 			break;
 		}
 		
 	}
-	cout << str << endl;;
+	cout << text << endl;;
 }
 sockaddr_in  Crequests::socket_url_ip(string url)//传入域名，返回ip信息
 {
@@ -102,7 +115,7 @@ string Crequests::body_structure(string &method,string &url,map<string, string>&
 	}*/
 	return code;
 }
-char * Crequests::get_response_head(char *req)
+bool Crequests::get_response_head(char *req)
 {
 	//这个函数用来查找到\r\n\r\n的位置，取到head；
 	//
@@ -123,14 +136,13 @@ char * Crequests::get_response_head(char *req)
 		}
 		if (j == flag_lent)
 		{
-			cout <<"jssss"<< j << endl;
-			cout << i << endl;
 			string  head;
-			req_to_head(head, req, i);
-			cout << head << endl;
-			return flag;
+			head_buf = i + 4;
+			req_to_head(headers, req, i);
+			return true;
 		}
 	}
+	return false;
 }
 void Crequests::req_to_head(string &head, char *req,int max)
 {
@@ -140,18 +152,18 @@ void Crequests::req_to_head(string &head, char *req,int max)
 	}
 	
 }
-void Crequests::get_Content_Lengt(char *req,int max,int buf)
+int Crequests::get_Content_Lengt()
 {
 	cmatch st;
 	regex length("Content-Length: (\\d+)");
 
-	if (regex_search(req, st, length))
+	if (regex_search(headers.c_str(), st, length))
 	{
-		cout << st[1] << endl;
+		return str_to_int(st[1]);
 	}
 	else
 	{
-
+		return 0;
 	}
 	
 
@@ -175,3 +187,52 @@ void Crequests::get_Content_Lengt(char *req,int max,int buf)
 	cout << now_url << endl;
 	socket_send(now_url, body_m);
 }
+ int Crequests::str_to_int(string str) //字符串转int函数
+ {
+	 if (str.empty())
+	 {
+		 throw "不能传入一个空的字符串";   //弹出异常
+	 }
+	 int Int = 0;
+	 for (int i = 0; i<str.size(); i++)
+	 {
+
+		 switch (str[i])
+		 {
+		 case '0':
+			 Int = Int * 10 + 0;
+			 break;
+		 case '1':
+			 Int = Int * 10 + 1;
+			 break;
+		 case '2':
+			 Int = Int * 10 + 2;
+			 break;
+		 case '3':
+			 Int = Int * 10 + 3;
+			 break;
+		 case '4':
+			 Int = Int * 10 + 4;
+			 break;
+		 case '5':
+			 Int = Int * 10 + 5;
+			 break;
+		 case '6':
+			 Int = Int * 10 + 6;
+			 break;
+		 case '7':
+			 Int = Int * 10 + 7;
+			 break;
+		 case '8':
+			 Int = Int * 10 + 8;
+			 break;
+		 case '9':
+			 Int = Int * 10 + 9;
+			 break;
+
+		 default:
+			 throw "无法转换成整型，参数有错误";
+		 }
+	 }
+	 return Int;
+ }
