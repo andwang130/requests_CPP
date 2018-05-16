@@ -1,3 +1,5 @@
-﻿  requests.cpp
-c:\mecpp\requests_cpp\project1\project1\requests.cpp(197): warning C4018: “<”: 有符号/无符号不匹配
+﻿  mian.cpp
+  requests.cpp
+c:\mecpp\requests_cpp\project1\project1\requests.cpp(226): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
   Project1.vcxproj -> C:\mecpp\requests_CPP\Project1\Debug\Project1.exe

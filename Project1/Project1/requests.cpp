@@ -9,7 +9,7 @@ void Crequests::socket_send(string url, string body)
 	WSADATA wsaData;
 	WSAStartup(MAKEWORD(2, 2), &wsaData);  //绑定socket版本，在windos操作系统上，使用socket都要先绑定版本
 	struct sockaddr_in server_in; //地址结构体
-	SOCKET socket_= socket(AF_INET,SOCK_STREAM,0);//建立一个cocket。3个参数，第一个	协议族，AF_INET表示网络连接，第二类型SOCK_STREAM TCP，0表示使用第二参数的协议类型
+	socket_= socket(AF_INET,SOCK_STREAM,0);//建立一个cocket。3个参数，第一个	协议族，AF_INET表示网络连接，第二类型SOCK_STREAM TCP，0表示使用第二参数的协议类型
 	server_in = socket_url_ip(url); //获取到IP
 	//bind(SOCKET, (struct sockaddr*) &server_in.sin_addr, sizeof(server_in));//绑定socket,传入socket和地址结构体转换成sockaddr指针类型，第三个参数是结构体的大小
 	char ipbuf[16];
@@ -42,21 +42,50 @@ void Crequests::socket_send(string url, string body)
 	
 	sum_buf = Lengt_buf + head_buf;//Content_Lengt的长度加上head的长度，是整个返回的长度
 	cout << "Lengt_buf" << sum_buf << endl;
-	int i= 0;
-	while(readbuf<sum_buf) //recv返回字节数，recv传递4个参数。第一个是socket,第二个是结束返回的数据的，char *，第三个是单次接收的大小，第四个一般为0
+	if (Lengt_buf > 0)  //有Content_Lengt用Content_Lengt解析
+	{
+		Content_Lengt_analysis();
+	}
+	else
+	{
+		chunked_analysis();  //没有用chunked
+	}
+	
+}
+void Crequests::Content_Lengt_analysis()
+{
+	char req[buf_len];
+	while (readbuf<sum_buf) //recv返回字节数，recv传递4个参数。第一个是socket,第二个是结束返回的数据的，char *，第三个是单次接收的大小，第四个一般为0
 	{
 		int buf = recv(socket_, req, buf_len, 0);
 		readbuf += buf;
 		text += req;
-		cout << "***************"<< readbuf << endl;
+		cout << "***************" << readbuf << endl;
 		memset(req, 0, buf_len);
 		if (buf <= 0)
 		{
 			break;
 		}
-		
+
 	}
-	cout << text << endl;;
+	cout << text << endl;
+}
+void Crequests::chunked_analysis()
+{
+	cmatch st;
+	regex chunked("\r\n0\r\n\r\n");
+	char req[buf_len];
+	while (true)
+	{
+	 recv(socket_, req, buf_len, 0);
+	 text += req;
+	 memset(req, 0, buf_len);
+	 if (regex_search(req, st, chunked))
+	 {
+		 break;
+	 }
+	 
+	}
 }
 sockaddr_in  Crequests::socket_url_ip(string url)//传入域名，返回ip信息
 {

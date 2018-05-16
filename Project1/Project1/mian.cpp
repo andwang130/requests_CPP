@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 	
-	string url = "www.gamersky.com/z/watchdogs2/";
+	string url = "simg.sinajs.cn/blog7newtpl/css/7/7_13/t.css";
 	Crequests requests;
 	map < string, string> headers=
 	{
@@ -14,7 +14,7 @@ int main()
 		{"Accept - Encoding","gzip, deflate"},
 		{"Accept-Language","zh-CN,zh;q=0.9"},
 		{"User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"},
-		{"Host","www.gamersky.com"},
+		{"Host","blog.sina.com.cn"},
 		{"Connection","keep-alive"},
 		{"Upgrade-Insecure-Requests","1"}
 	};
