@@ -1,12 +1,13 @@
-#include<iostream>
+﻿#include<iostream>
 #include<requests.h>
 #include<WinSock2.h>
 #include <ws2tcpip.h>
+#include<DNSLooK.h>
 using namespace std;
 int main()
 {
-	
-	string url = "simg.sinajs.cn/blog7newtpl/css/7/7_13/t.css";
+
+	string url = "www.carzy.wang";
 	Crequests requests;
 	map < string, string> headers=
 	{

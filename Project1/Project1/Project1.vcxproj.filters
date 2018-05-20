@@ -21,9 +21,21 @@
     <ClCompile Include="requests.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DNSLook.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="response.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="requests.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DNSLooK.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="response.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

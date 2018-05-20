@@ -71,27 +71,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ReferencePath>C:\mecpp\requests_CPP\Project1\Project1;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\mecpp\requests_CPP\Project1\Project1;$(SourcePath)</SourcePath>
-    <IncludePath>C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
+    <IncludePath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ReferencePath>C:\mecpp\requests_CPP\Project1\Project1;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\mecpp\requests_CPP\Project1\Project1;$(SourcePath)</SourcePath>
-    <IncludePath>C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
+    <IncludePath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ReferencePath>C:\mecpp\requests_CPP\Project1\Project1;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\mecpp\requests_CPP\Project1\Project1;$(SourcePath)</SourcePath>
-    <IncludePath>C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
+    <IncludePath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ReferencePath>C:\mecpp\requests_CPP\Project1\Project1;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\mecpp\requests_CPP\Project1\Project1;$(SourcePath)</SourcePath>
-    <IncludePath>C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
+    <IncludePath>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0;C:\mecpp\requests_CPP\Project1\Project1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,6 +100,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc141-mt-gd-x64-1_67.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -108,6 +112,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc141-mt-gd-x64-1_67.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,6 +129,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc141-mt-gd-x64-1_67.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,16 +145,21 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>D:\me\新建文件夹\boost_1_67_0\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_system-vc141-mt-gd-x64-1_67.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DNSLooK.h" />
     <ClInclude Include="requests.h" />
+    <ClInclude Include="response.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DNSLook.cpp" />
     <ClCompile Include="mian.cpp" />
     <ClCompile Include="requests.cpp" />
+    <ClCompile Include="response.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
